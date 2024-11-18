@@ -1,0 +1,489 @@
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+  Typographic tweaks!
+  3. Add accessible line-height
+  4. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Rubik";
+  background-color: #F4F6FA;
+}
+
+/*
+  5. Improve media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+  6. Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
+  7. Avoid text overflows
+*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  max-width: 327px;
+  margin-inline: auto;
+  padding-top: 25px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 16px 40px 0px #8FA0C124;
+  background-color: #FFFFFF;
+  padding: 12px;
+  border-radius: 12px;
+  gap: 16px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #313E51;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerSubject {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.themeOptions label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.switch {
+  appearance: none;
+  background-color: #A729F5;
+  height: 20px;
+  width: 32px;
+  display: inline-flex;
+  margin: 0;
+  border-radius: 15px;
+  box-sizing: border-box;
+  padding: 4px;
+  transition: all .4s;
+  cursor: pointer;
+}
+
+.switch:after {
+  content: "";
+  background-color: white;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.switch:checked {
+  background-color: #A729F5;
+  justify-content: end;
+}
+
+.mainText {
+  margin-top: 32px;
+  margin-bottom: 40px;
+}
+
+.mainText h2 {
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 40px;
+  margin-bottom: 8px;
+  color: #313E51;
+}
+
+.mainText h3 {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 40px;
+  margin-bottom: 16px;
+  color: #313E51;
+}
+
+.mainText p {
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 21px;
+  color: #626C7F;
+}
+
+.questionContent {
+  margin-top: 32px;
+  margin-bottom: 40px;
+}
+
+.questionNumber {
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 21px;
+  color: #626C7F;
+  margin-bottom: 12px;
+}
+
+.question {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #313E51;
+  margin-bottom: 24px;
+}
+
+.selectionBox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.optionBtn {
+  box-shadow: 0px 16px 40px 0px #8FA0C124;
+  background-color: #fff;
+  border-radius: 12px;
+  border-style: none;
+  padding: 12px;
+}
+
+.selections {
+  padding: 11px 13px 11px 14px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #626C7F;
+  background-color: #F4F6FA;
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+}
+
+.selections:hover {
+  background-color: #F6E7FF;
+  color: #A729F5;
+}
+
+.optionText, .headerSubject h3, .resultSubject h3 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #313E51;
+}
+
+.submitBtn, .toMainPage a {
+  display: inline-block;
+  background-color: #A729F5;
+  border-style: none;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0px 16px 40px 0px #8FA0C124;
+  width: 100%;
+  color: #fff;
+  margin-top: 12px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.submitBtn:hover {
+  background: #d394fa;
+}
+
+.progressBar {
+  width: 327px;
+  background-color: #FFFFFF;
+  height: 16px;
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.progressBarInner {
+  background-color: #A729F5;
+  width: 80%;
+  height: 8px;
+  content: "";
+  border-radius: 104px;
+  transition: width 0.5s ease;
+}
+
+.optionBtn:focus {
+  border : 3px solid #A729F5;
+  padding: 9px;
+
+  .selections {
+    background: #A729F5;
+    color : white;
+  }
+ 
+}
+
+.optionBtn.selected.green {
+  border: 3px solid #26D782;
+  padding: 9px;
+
+  .selections {
+    background: #26D782;
+    color : white;
+  }
+}
+
+.optionBtn.green {
+  border: 3px solid #26D782;
+  padding: 9px;
+
+  .selections {
+    background: #26D782;
+    color : white;
+  }
+}
+
+.optionBtn.selected.red {
+  border: 3px solid red;
+  padding: 9px;
+
+  .selections {
+    background: red;
+    color : white;
+  }
+}
+
+.d-none {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+
+.resultContent h5, .resultContent h4 {
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 40px;
+  color: #313E51;
+  margin-bottom: 8px;
+}
+
+.resultContent h4 {
+  font-weight: 500;
+}
+
+.resultBox {
+  background-color: #fff;
+  box-shadow: 0px 16px 40px 0px #8FA0C124;
+  padding: 32px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.resultSubject {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.resultSubject img, .headerSubject img, .card img {
+  width: 40px;
+  height: 40px;
+}
+
+.result {
+  font-size: 88px;
+  font-weight: 500;
+  line-height: 88px;
+  color: #313E51;
+  margin-bottom: 16px;
+}
+
+.resultBox span {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #626C7F;
+}
+
+/* Tablet Start */
+
+@media (width > 375px) {
+  .container {
+    max-width: 640px;
+    padding-top: 54px;
+  }
+
+  .content {
+    gap: 24px;
+  }
+
+  .card {
+    gap: 32px;
+    font-size: 28px;
+    line-height: 28px;
+  }
+
+  .mainText h2 {
+    font-size: 64px;
+    line-height: 64px;
+  }
+  
+  .mainText h3 {
+    font-size: 64px;
+    line-height: 64px;
+  }
+
+  .mainText p {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .questionContent {
+    margin-top: 49px;
+    margin-bottom: 64px;
+  }
+
+  .questionNumber {
+    font-size: 20px;
+    line-height: 30px;
+    margin-bottom: 27px;
+  }
+
+  .question {
+    font-size: 36px;
+    line-height: 43.2px;
+    margin-bottom: 40px;
+  }
+
+  .progressBar {
+    width: 640px;
+  }
+
+  .selections {
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 28px;
+  }
+
+  .optionText, .headerSubject h3, .resultSubject h3 {
+    font-size: 28px;
+    line-height: 28px;
+  }
+
+  .submitBtn, .toMainPage a {
+    padding: 32px;
+    border-radius: 24px;
+    margin-top: 32px;
+    font-size: 28px;
+    line-height: 28px;
+    display: inline-block;
+  }
+
+  .resultContent h5, .resultContent h4 {
+    font-size: 64px;
+    line-height: 64px;
+  }
+
+  .resultBox {
+    padding: 48px;
+    border-radius: 24px;
+  }
+
+  .resultSubject {
+    gap: 24px;
+  }
+
+  .resultSubject img, .headerSubject img, .card img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .result {
+    font-size: 144px;
+    line-height: 144px;
+  }
+
+  .resultBox span {
+    font-size: 24px;
+    line-height: 36px;
+  }
+}
+
+/* Desktop Start */
+
+@media (width > 768px) {
+
+  .container {
+    max-width: 1160px;
+    padding-top: 97px;
+  }
+
+  .container-inner {
+    display: flex;
+    justify-content: center;
+    gap: 131px;
+    padding-top: 99px;
+  }
+
+  .content {
+    width: 564px;
+  }
+}
