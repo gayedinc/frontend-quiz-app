@@ -497,6 +497,7 @@ submitBtn.style.display = 'none';
 
 const optionTexts = document.querySelectorAll('.optionText');
 const optionBtns = document.querySelectorAll('.optionBtn');
+const containerInner = document.querySelector('.container-inner');
 
 submitBtn.classList.add('submitBtn');
 submitBtn.addEventListener('click', function () {
@@ -524,24 +525,25 @@ submitBtn.addEventListener('click', function () {
         displayQuestions();
       }
       else {
-        content.innerHTML = `
+        containerInner.innerHTML = `
         <div class="resultContent">
-          <h5>Quiz completed</h5>
-          <h4>You scored...</h4>
-        </div>
-        <div class="resultBox">
-          <div class="resultSubject">
-          <img src="assets/img/${cardTxt.toLocaleLowerCase()}-icon.svg" alt="Quiz Subject Icon">
-          <h3>${cardTxt}</h3>
+            <h5>Quiz completed</h5>
+            <h4>You scored...</h4>
           </div>
-          <p class="result">${correctAnswerCounter}</p>
-          <span>out of ${formattedQuestions.length}</span>
-        </div>
-        <div class="toMainPage">
-          <a href="/">Play Again</a>
+          <div class="resultBox">
+            <div class="resultSubject">
+            <img src="assets/img/${cardTxt.toLocaleLowerCase()}-icon.svg" alt="Quiz Subject Icon">
+            <h3>${cardTxt}</h3>
+            </div>
+            <p class="result">${correctAnswerCounter}</p>
+            <span>out of ${formattedQuestions.length}</span>
+          </div>
+          <div class="toMainPage">
+            <a href="/">Play Again</a>
+          </div>
         </div>
       `;
-        mainText.innerHTML = "";
+        mainText.style.display = 'none';
         submitBtn.style.display = 'none';
       }
     }, 500)

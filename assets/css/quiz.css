@@ -486,4 +486,52 @@ a {
   .content {
     width: 564px;
   }
+
+  .submitBtn, .toMainPage a {
+    width: 564px;
+  }
+
+  .mainText, .progressBar {
+    width: 465px;
+  }
+
+  .questionContent {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .resultArea {
+    display: flex;
+    gap: 143px;
+  }
+
+  .resultContent h5, .resultContent h4 {
+    font-size: 64px;
+    line-height: 64px;
+  }
+
+  .resultBox {
+    padding: 48px;
+    border-radius: 24px;
+    width: 564px;
+  }
+
+  .resultSubject {
+    gap: 24px;
+  }
+
+  .resultSubject img, .headerSubject img, .card img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .result {
+    font-size: 144px;
+    line-height: 144px;
+  }
+
+  .resultBox span {
+    font-size: 24px;
+    line-height: 36px;
+  }
 }
