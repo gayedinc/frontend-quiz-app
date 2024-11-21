@@ -289,7 +289,7 @@ a {
   padding: 9px;
   background-image: url("/assets/img/true-icon.svg");
   background-repeat: no-repeat;
-  background-position: right center;
+  background-position: 99% 50%;
 
   .selections {
     background: #26D782;
@@ -301,7 +301,7 @@ a {
   padding: 12px;
   background-image: url("/assets/img/true-icon.svg");
   background-repeat: no-repeat;
-  background-position: right center;
+  background-position: 99% 50%;
 }
 
 .optionBtn.selected.red {
@@ -309,7 +309,7 @@ a {
   padding: 9px;
   background-image: url("/assets/img/false-icon.svg");
   background-repeat: no-repeat;
-  background-position: right center;
+  background-position: 99% 50%;
 
 
   .selections {
