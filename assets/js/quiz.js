@@ -370,11 +370,27 @@ const data = {
 const container = document.querySelector('.container');
 const content = document.querySelector('.content');
 
-const warnTxt = document.createElement('p');
-warnTxt.innerText = 'Please select an answer';
-warnTxt.classList.add('warnTxt');
-container.appendChild(warnTxt);
-warnTxt.style.display = 'none';
+//tema değişikliği için;
+
+if (localStorage.isDarkMode === 'true') {
+  document.body.classList.add('darkMode');
+  themeChange.checked = true;
+}
+else {
+  document.body.classList.remove('darkMode');
+  themeChange.checked = false;
+}
+
+themeChange.addEventListener("change", function () {
+  if (themeChange.checked) {
+    document.body.classList.add('darkMode');
+    localStorage.isDarkMode = true;
+  }
+  else {
+    document.body.classList.remove('darkMode');
+    localStorage.isDarkMode = false;
+  }
+});
 
 for (const quiz of data.quizzes) {
   content.innerHTML +=
@@ -411,9 +427,10 @@ let formattedQuestions = []; //soruları numaralandırılmış formatta saklamak
 function handleQuestions() {
   formattedQuestions = [];
   querys.forEach((que) => {
+    const sanitizedQuestion = que.question.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     formattedQuestions.push({
       number: index, //her soruya numara atamak için
-      question: que.question,
+      question: sanitizedQuestion,
       selects: que.options,
       answer: que.answer,
     });
@@ -428,6 +445,7 @@ let correctAnswerCounter = 0;
 const mainText = document.querySelector('.mainText');
 
 const header = document.querySelector('.header');
+const headerSubject = document.querySelector('.headerSubject');
 const progressBar = document.querySelector('.progressBarInner');
 
 let progress = 1;
@@ -451,17 +469,10 @@ function displayQuestions() {
     content.appendChild(optionBtn);
   });
 
-  header.innerHTML = `
+  headerSubject.innerHTML = `
       <div class="headerSubject">
       <img src="assets/img/${cardTxt.toLocaleLowerCase()}-icon.svg" alt="Quiz Subject Icon">
       <h3>${cardTxt}</h3>
-      </div>
-      <div class="themeOptions">
-        <label>
-          <span><img src="assets/img/sun-light-icon.svg" alt="Light Mode Icon"></span>
-          <input class="switch" type="checkbox" id="themeChange">
-          <span><img src="assets/img/moon-night-icon.svg" alt="Dark Mode Icon"></span>
-        </label>
       </div>
   `;
 
@@ -474,8 +485,7 @@ function displayQuestions() {
         </div>
       </div>
     `;
-  // const warnTxt = document.createElement('p');
-  // warnTxt.classList.add(".d-block")
+
   submitBtn.style.display = 'block';
   const optionBtns = document.querySelectorAll('.optionBtn');
   for (const option of optionBtns) {
@@ -484,10 +494,12 @@ function displayQuestions() {
       // Daha önce seçili olan butonu kaldırıyoruz.
       if (selectedOption) {
         selectedOption.classList.remove('selected');
+
       }
       // Yeni seçimi kaydediyoruz ve stil ekliyoruz.
       selectedOption = option;
       selectedOption.classList.add('selected');
+      // selectedOption.classList.toggle('selected');
     });
   }
 }
@@ -498,6 +510,8 @@ submitBtn.style.display = 'none';
 const optionTexts = document.querySelectorAll('.optionText');
 const optionBtns = document.querySelectorAll('.optionBtn');
 const containerInner = document.querySelector('.container-inner');
+const bottom = document.querySelector('.bottom');
+const bottomInner = document.querySelector('.bottom-inner');
 
 submitBtn.classList.add('submitBtn');
 submitBtn.addEventListener('click', function () {
@@ -505,10 +519,11 @@ submitBtn.addEventListener('click', function () {
     warnTxt.style.display = 'none';
     const selectedTxt = selectedOption.querySelector('.optionText').innerText.trim();
     const correctAnswer = formattedQuestions[i].answer;
-
+    // eğer seçilen doğru cevapsa
     if (selectedTxt === correctAnswer) {
       selectedOption.classList.add("green");
       correctAnswerCounter++;
+      // eğer seçilen yanlış cevapsa
     } else {
       selectedOption.classList.add("red");
       const optionBtns = document.querySelectorAll('.optionBtn');
@@ -526,27 +541,28 @@ submitBtn.addEventListener('click', function () {
       }
       else {
         containerInner.innerHTML = `
-        <div class="resultContent">
+          <div class="resultContent">
             <h5>Quiz completed</h5>
             <h4>You scored...</h4>
           </div>
-          <div class="resultBox">
-            <div class="resultSubject">
-            <img src="assets/img/${cardTxt.toLocaleLowerCase()}-icon.svg" alt="Quiz Subject Icon">
-            <h3>${cardTxt}</h3>
+          <div class="resultRightSide">
+            <div class="resultBox">
+              <div class="resultSubject">
+              <img src="assets/img/${cardTxt.toLocaleLowerCase()}-icon.svg" alt="Quiz Subject Icon">
+              <h3>${cardTxt}</h3>
+              </div>
+              <p class="result">${correctAnswerCounter}</p>
+              <span>out of ${formattedQuestions.length}</span>
             </div>
-            <p class="result">${correctAnswerCounter}</p>
-            <span>out of ${formattedQuestions.length}</span>
+            <div class="toMainPage">
+              <a href="/">Play Again</a>
+            </div>
           </div>
-          <div class="toMainPage">
-            <a href="/">Play Again</a>
-          </div>
-        </div>
       `;
         mainText.style.display = 'none';
         submitBtn.style.display = 'none';
       }
-    }, 500)
+    }, 1500)
     selectedOption = false;
   } else {
     warnTxt.style.display = 'flex';
@@ -554,4 +570,14 @@ submitBtn.addEventListener('click', function () {
 
 })
 submitBtn.innerText = 'Submit Answer'
-container.appendChild(submitBtn);
+bottomInner.appendChild(submitBtn);
+const warnTxt = document.createElement('div');
+warnTxt.innerHTML = `
+    <img src="assets/img/false-icon.svg" alt="Quiz Subject Icon">
+    <p>Please select an answer</p>
+  `;
+
+bottomInner.appendChild(warnTxt);
+warnTxt.classList.add('warnTxt');
+
+warnTxt.style.display = 'none';
