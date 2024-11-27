@@ -660,7 +660,7 @@ a {
     line-height: 36px;
   }
 
-  .optionBtn {
+  .optionBtn, .optionBtn.green {
     padding: 18px 20px;
   }
 
@@ -668,10 +668,6 @@ a {
     border : 3px solid #A729F5;
     padding: 15px 17px;
 
-  }
-
-  .option.green {
-    padding: 18px 20px;
   }
   
   .optionBtn.selected.green {
