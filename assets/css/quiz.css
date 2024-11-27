@@ -234,6 +234,7 @@ a {
   font-weight: 500;
   line-height: 18px;
   color: #313E51;
+  text-align: left;
 }
 
 .submitBtn, .toMainPage a {
