@@ -399,25 +399,25 @@ for (const quiz of data.quizzes) {
 }
 
 let querys = []; //soruları ham halleriyle saklamak
-let index = 1;
+let index = 1; // sorulara numara vermek için 1den başlatıyoruz
 
 const cards = document.querySelectorAll('.card');
-let cardTxt = "";
+let cardTxt = ""; //konu isminin tutulacağı boş string
 
 for (const card of cards) {
   card.addEventListener('click', function () {
-    const title = this.innerText;
-    cardTxt = this.innerText;
-    querys = handleTitle(title);
-    handleQuestions();
-    displayQuestions();
+    const title = this.innerText; //konu başlığını almak için kullanılan geçici değişken
+    cardTxt = this.innerText; // konu başlığını uzun vade saklayıp başka yerde kullanmak için
+    querys = handleTitle(title); // seçilen başlık bu fonksiyona gönderilir ve seçilen başlığa karşılık gelen soruları almak için fonksiyonu çağırdık
+    handleQuestions(); // Sorular işlenir
+    displayQuestions(); // Sorular ekranda gösterilir
   })
 }
 
 function handleTitle(title) {
-  for (const quiz of data.quizzes) {
-    if (quiz.title === title) {
-      return quiz.questions;
+  for (const quiz of data.quizzes) { // Tüm quizleri dolaş
+    if (quiz.title === title) { // Eğer quiz başlığı seçilen başlıkla eşleşirse
+      return quiz.questions; // O quizin sorularını döndür
     }
   }
 }
@@ -427,20 +427,21 @@ let formattedQuestions = []; //soruları numaralandırılmış formatta saklamak
 function handleQuestions() {
   formattedQuestions = [];
   querys.forEach((que) => {
+    // soru metinlerinde yer alabilecek riskli semboller için
     const sanitizedQuestion = que.question.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     formattedQuestions.push({
       number: index, //her soruya numara atamak için
-      question: sanitizedQuestion,
-      selects: que.options,
-      answer: que.answer,
+      question: sanitizedQuestion, // Temizlenmiş soru metni
+      selects: que.options, // Sorunun seçenekleri (A, B, C, D)
+      answer: que.answer, // Doğru cevap
     });
     index++;
   });
-  displayQuestions();
+  displayQuestions(); //sorular işlendikten sonra ekranda gösterilmesi için bu fonksiyonu çağırıyoruz
 }
 
-let i = 0;
-let correctAnswerCounter = 0;
+let i = 0; // görüntülenen sorunun indeksini tutar, formattedQuestions dizisindeki sorular arasında gezinmek için
+let correctAnswerCounter = 0; // doğru cevaplanan soruların sayısını tutar
 
 const mainText = document.querySelector('.mainText');
 
@@ -448,8 +449,7 @@ const header = document.querySelector('.header');
 const headerSubject = document.querySelector('.headerSubject');
 const progressBar = document.querySelector('.progressBarInner');
 
-let progress = 1;
-let selectedOption = null;
+let selectedOption = null; // kullanıcının seçtiği şıkkı tutar
 
 //soruları ekrana yazdırmak için
 function displayQuestions() {
@@ -458,7 +458,8 @@ function displayQuestions() {
   const selections = ["A", "B", "C", "D"];
   formattedQuestions[i].selects.forEach((option, index) => {
     const optionBtn = document.createElement('button');
-    const optionText = option.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const optionText = option.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // cevap metinlerinde yer alabilecek riskli semboller için
+    // cevap şıklarının yazdırıldığı alan
     optionBtn.innerHTML = `
     <div class="selectionBox">
       <h5 class="selections">${selections[index]}</h5>
@@ -469,6 +470,7 @@ function displayQuestions() {
     content.appendChild(optionBtn);
   });
 
+  // header alanında konu başlığının yazdırıldığı alan
   headerSubject.innerHTML = `
       <div class="headerSubject">
       <img src="assets/img/${cardTxt.toLocaleLowerCase()}-icon.svg" alt="Quiz Subject Icon">
@@ -476,6 +478,7 @@ function displayQuestions() {
       </div>
   `;
 
+  // soruların ve progressbarın bulunduğu kısım
   mainText.innerHTML = `
       <div class="questionContent">
         <h5 class="questionNumber">Question ${formattedQuestions[i].number} of ${formattedQuestions.length}</h5>
@@ -517,29 +520,36 @@ submitBtn.classList.add('submitBtn');
 submitBtn.addEventListener('click', function () {
   if (selectedOption) {
     warnTxt.style.display = 'none';
+
+    //selectedOption ile kullanıcının seçtiği şıkkın butonuna oradan da optionText ile içerisindeki p etiketine ulaşılır
     const selectedTxt = selectedOption.querySelector('.optionText').innerText.trim();
+
+    // tüm soruların işlendiği, numaralandırıldığı ve düzenlendiği bir diziden şu anda hangi indexte isek onun (.answer) cevabını alır
     const correctAnswer = formattedQuestions[i].answer;
+
     // eğer seçilen doğru cevapsa
     if (selectedTxt === correctAnswer) {
-      selectedOption.classList.add("green");
-      correctAnswerCounter++;
+      selectedOption.classList.add("green"); // doğru cevabı göstermek için gereken stili ekler
+      correctAnswerCounter++; // doğru cevap sayacı arttılır
+
       // eğer seçilen yanlış cevapsa
     } else {
-      selectedOption.classList.add("red");
+      selectedOption.classList.add("red"); // yanlış cevabı göstermek için gereken stili ekler
       const optionBtns = document.querySelectorAll('.optionBtn');
-      for (const option of optionBtns) {
-        const optionTxt = option.querySelector('.optionText').innerText.trim();
-        if (optionTxt === correctAnswer) {
+      for (const option of optionBtns) { // doğru cevabı göstermek için şıklar üzerinde dönülür
+        const optionTxt = option.querySelector('.optionText').innerText.trim(); // her bir şıkkın içeriğine ulaşılır
+        if (optionTxt === correctAnswer) { // doğru cevap bulunduğunda ise doğru cevabı göstermek için kullanılan sınıf eklenir
           option.classList.add("green");
         }
       }
     }
+    // kullanıcı seçimini yaptıktan 1.5 saniye sonra bir sonraki soruya geçer
     setTimeout(() => {
       i++;
-      if (i < querys.length) {
+      if (i < querys.length) { //eğer sorular bitmemişse soruları göstermeye devam et
         displayQuestions();
       }
-      else {
+      else { // bitmişse sonuç ekranını gösteren alan
         containerInner.innerHTML = `
           <div class="resultContent">
             <h5>Quiz completed</h5>
